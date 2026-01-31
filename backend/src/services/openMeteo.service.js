@@ -24,12 +24,17 @@ async function fetchWithTimeout(url, timeoutMs) {
   }
 }
 
-async function fetchWeeklyForecastDaily({ latitude, longitude, timezone = "auto" }) {
+async function fetchWeeklyForecastDaily({
+  latitude,
+  longitude,
+  timezone = "auto",
+}) {
   const url = new URL(OPEN_METEO_BASE_URL);
   url.searchParams.set("latitude", String(latitude));
   url.searchParams.set("longitude", String(longitude));
   url.searchParams.set("timezone", timezone);
-  url.searchParams.set("daily", "temperature_2m_min,temperature_2m_max");
+  url.searchParams.set("daily", "temperature_2m_min,temperature_2m_max,weather_code");
+  url.searchParams.set("forecast_days", "7");
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
@@ -47,11 +52,16 @@ async function fetchWeeklyForecastDaily({ latitude, longitude, timezone = "auto"
       const dates = data?.daily?.time ?? [];
       const mins = data?.daily?.temperature_2m_min ?? [];
       const maxs = data?.daily?.temperature_2m_max ?? [];
+      const codes = data?.daily?.weather_code ?? [];
 
-      if (!Array.isArray(dates) || !Array.isArray(mins) || !Array.isArray(maxs)) {
+      if (
+        !Array.isArray(dates) ||
+        !Array.isArray(mins) ||
+        !Array.isArray(maxs)
+      ) {
         throw new Error("Open-Meteo returned invalid daily payload");
       }
-      if (dates.length !== mins.length || dates.length !== maxs.length) {
+      if (dates.length !== mins.length || dates.length !== maxs.length || dates.length !== codes.length) {
         throw new Error("Open-Meteo returned inconsistent daily arrays");
       }
 
@@ -60,12 +70,15 @@ async function fetchWeeklyForecastDaily({ latitude, longitude, timezone = "auto"
         date,
         temp_min: mins[i],
         temp_max: maxs[i],
+        weather_code: codes[i],
       }));
     } catch (err) {
       // Retry only on network/timeout (no HTTP status)
       const shouldRetryNetwork =
         attempt < MAX_ATTEMPTS &&
-        (err?.name === "AbortError" || err?.code === "ECONNRESET" || err?.code === "ENOTFOUND");
+        (err?.name === "AbortError" ||
+          err?.code === "ECONNRESET" ||
+          err?.code === "ENOTFOUND");
 
       if (shouldRetryNetwork) {
         await sleep(300 * attempt);

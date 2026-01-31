@@ -12,6 +12,13 @@ const { getNextOriginForRun, upsertDailyResults } = require("../db/queries");
 const { fetchWeeklyForecastDaily } = require("../services/openMeteo.service");
 
 const LOCK_KEY = 424242; // prevents parallel scheduler runs in the same DB
+// ┌──────── minute (0–59)
+// │ ┌────── hour (0–23)
+// │ │ ┌──── day of month (1–31)
+// │ │ │ ┌── month (1–12)
+// │ │ │ │ ┌─ day of week (0–6) (0 = Sunday)
+// │ │ │ │ │
+// * * * * *
 const CRON_EXPRESSION = "0 * * * *"; // every hour at minute 00
 
 /**

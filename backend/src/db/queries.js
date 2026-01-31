@@ -53,18 +53,25 @@ async function upsertDailyResults(client, originId, dailyRows) {
   let p = 1;
 
   for (const row of dailyRows) {
-    placeholders.push(`($${p++}, $${p++}, $${p++}, $${p++})`);
-    values.push(originId, row.date, row.temp_min, row.temp_max);
+    placeholders.push(`($${p++}, $${p++}, $${p++}, $${p++}, $${p++})`);
+    values.push(
+      originId,
+      row.date,
+      row.temp_min,
+      row.temp_max,
+      row.weather_code ?? null
+    );
   }
 
   await client.query(
     `
-    INSERT INTO weather_results (origin_id, date, temp_min, temp_max)
+    INSERT INTO public.weather_results (origin_id, date, temp_min, temp_max, weather_code)
     VALUES ${placeholders.join(",")}
     ON CONFLICT (origin_id, date)
     DO UPDATE SET
       temp_min = EXCLUDED.temp_min,
       temp_max = EXCLUDED.temp_max,
+      weather_code = EXCLUDED.weather_code,
       fetched_at = NOW()
     `,
     values
@@ -78,9 +85,15 @@ async function upsertDailyResults(client, originId, dailyRows) {
 async function getForecastDays(originId, limit = 7) {
   const { rows } = await pool.query(
     `
-    SELECT date, temp_min, temp_max, fetched_at
+    WITH latest AS (
+      SELECT MAX(fetched_at) AS max_fetched
+      FROM weather_results
+      WHERE origin_id = $1
+    )
+    SELECT date, temp_min, temp_max, weather_code, fetched_at
     FROM weather_results
     WHERE origin_id = $1
+      AND fetched_at = (SELECT max_fetched FROM latest)
     ORDER BY date ASC
     LIMIT $2
     `,
