@@ -1,0 +1,41 @@
+/* tokens.css */
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+
+  /* Light default */
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: rgba(15, 23, 42, 0.12);
+
+  --primary: #2563eb;
+  --ring: 0 0 0 3px rgba(37, 99, 235, .25);
+  --sp-2: 0.5rem;
+  --sp-4: 1rem;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.08);
+
+    /* Weather semantic colors */
+  --weather-clear: #fbbf24;   /* שמש */
+  --weather-cloudy: #94a3b8; /* עננים */
+  --weather-fog: #ecf5ff;
+  --weather-drizzle: #38bdf8;
+  --weather-rain: #688ea0;
+  --weather-snow: #67a7eb;
+  --weather-storm: #6366f1;
+  --weather-unknown: #9ca3af;
+}
+
+/* Dark overrides */
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface: #0f172a;
+  --text: #e7eefc;
+  --muted: #a9b7d0;
+  --border: rgba(231, 238, 252, 0.12);
+
+  --primary: #6ea8ff;
+  --ring: 0 0 0 3px rgba(110,168,255,.35);
+}
+
+
