@@ -1,0 +1,219 @@
+.bar {
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 var(--sp-4, 1rem);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2, 0.5rem);
+  min-width: 0;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+}
+
+.title {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modeBtn {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border);
+  color: var(--text);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+:root[data-theme="dark"] .modeBtn {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modeBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="dark"] .modeBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.modeBtn:active {
+  transform: translateY(1px);
+}
+
+.modeBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.modeIcon {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+
+  transition: transform 160ms ease;
+}
+
+.modeBtn:hover .modeIcon {
+  transform: rotate(-10deg) scale(1.03);
+}
+
+.modeText {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actionsRight {
+  display: flex;
+  align-items: center;
+  gap: 12px; 
+}
+
+.unitWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  height: 34px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.03);
+
+  overflow: hidden;
+}
+
+:root[data-theme="dark"] .unitWrap {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+
+.unitTab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+
+  padding: 0 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.unitTab:hover {
+  color: var(--text);
+}
+
+.unitTab:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+
+.unitActive {
+  color: var(--text);
+  background-color: var(--border);
+}
+
+
+.unitIndicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  height: 3px;
+
+  background: var(--text);
+  opacity: 0.9;
+
+  transform: translateX(0%);
+  transition: transform 160ms ease;
+}
+
+.unitIndicator[data-pos="right"] {
+  transform: translateX(100%);
+}
+
+/* Mobile layout: keep desktop pixel-perfect, only adjust under 720px */
+@media (max-width: 720px) {
+  .bar {
+    height: auto;
+    padding: 10px var(--sp-4, 1rem);
+    gap: 10px;
+
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* Top row: brand + right actions */
+  .brand {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .actionsRight {
+    flex: 0 0 auto;
+    gap: 10px;
+  }
+
+  /* Second row: search full width */
+  .actions {
+    order: 3;
+    width: 100%;
+  }
+
+  /* Make the search actually take the width */
+  .actions :global(*) {
+    max-width: 100%;
+  }
+}
+
+/* Very small phones: hide the "LIGHT MODE/DARK MODE" text, keep icon + button */
+@media (max-width: 420px) {
+  .modeText {
+    display: none;
+  }
+}

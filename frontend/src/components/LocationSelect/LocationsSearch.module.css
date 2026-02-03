@@ -1,0 +1,129 @@
+.root {
+  position: relative;
+}
+
+.field {
+  position: relative;
+  height: 40px;
+  width: min(420px, 100%);
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* focus על כל השדה */
+.field:focus-within {
+  box-shadow: var(--ring);
+}
+
+.fieldDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: var(--text);
+
+  padding-left: 45px;
+  padding-right: 12px;
+
+  font-size: 1rem;
+  box-sizing: border-box;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.input::placeholder {
+  color: var(--muted);
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+
+  z-index: 20;
+
+  padding: 0.35rem;
+  border-radius: 14px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+
+  max-height: 280px;
+  overflow: auto;
+
+  display: grid;
+  gap: 0.25rem;
+}
+
+.item {
+  width: 100%;
+  text-align: left;
+
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+
+  cursor: pointer;
+}
+
+.item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="dark"] .item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.itemActive {
+  border-color: rgba(37, 99, 235, 0.25);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.itemMain {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.itemSub {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-left: 0.35rem;
+}
+
+.empty {
+  padding: 0.75rem 0.6rem;
+  color: var(--muted);
+}
