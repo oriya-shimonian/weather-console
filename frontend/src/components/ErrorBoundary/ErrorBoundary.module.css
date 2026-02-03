@@ -1,0 +1,116 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+
+  display: grid;
+  place-items: center;
+}
+
+.content {
+  width: min(720px, 100%);
+  text-align: center;
+  margin: 0 auto;
+  padding-bottom: 260px; 
+}
+
+.title {
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.subtitle {
+  margin: 10px auto 18px;
+  max-width: 56ch;
+  line-height: 1.5;
+  font-size: 1.02rem;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+}
+
+.primaryBtn {
+  background: rgba(86, 210, 255, 0.664);
+  border-color: rgba(86, 210, 255, 0.3);
+}
+
+.primaryBtn:hover {
+  background: rgba(86, 210, 255, 0.22);
+}
+
+.secondaryBtn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(86, 210, 255, 0.664);
+  color: rgba(86, 210, 255, 0.664);
+}
+
+.secondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* Art */
+.earth {
+  position: absolute;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+
+  width: min(720px, 92vw);
+  height: auto;
+
+  opacity: 0.95;
+  pointer-events: none;
+  user-select: none;
+
+  animation: float 5.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .earth {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .content {
+    padding-bottom: 240px;
+  }
+
+  .earth {
+    bottom: -170px;
+  }
+}
