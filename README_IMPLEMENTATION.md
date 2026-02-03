@@ -169,12 +169,14 @@ The overall goal was to deliver a solution that is reliable, readable, and easy 
 
 ![Thunder storm dark mode](docs/thunder-storm-dark.png)
 
+### Rain Showers Weather
+![Rain Showers light mode](docs/rain-showers-light.png)
+
+![Rain Showers dark mode](docs/rain-showers-dark.png)
+
 ### Fog Weather
 ![Fog light mode](docs/fog-light.png)
 
 ![Fog dark mode](docs/fog-dark.png)
 
-### Light Rain Weather
-![Light Rain light mode](docs/light-rain-light.png)
 
-![Light Rain dark mode](docs/light-rain-dark.png)
