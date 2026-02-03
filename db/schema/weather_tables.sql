@@ -60,6 +60,8 @@ CREATE TABLE IF NOT EXISTS weather_results (
 
   fetched_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+  weather_code SMALLINT,
+
   -- prevent duplicates & enable UPSERT
   CONSTRAINT weather_results_origin_date_uq UNIQUE (origin_id, date),
 
