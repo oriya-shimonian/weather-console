@@ -20,7 +20,6 @@ export function LocationsSearch({ options, valueId, onChange, disabled }: Props)
     [options, valueId]
   );
 
-  // כשהתפריט סגור מציגים ערך נבחר; כשהוא פתוח - מציגים query
   const displayValue = useMemo(() => {
     if (open) return q;
     if (!selected) return "";
@@ -41,7 +40,7 @@ export function LocationsSearch({ options, valueId, onChange, disabled }: Props)
   const openPanel = () => {
     if (disabled) return;
     setOpen(true);
-    setQ(""); // פותחים עם חיפוש נקי
+    setQ(""); 
   };
 
   const closePanel = () => {

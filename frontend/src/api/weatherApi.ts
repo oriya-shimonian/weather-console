@@ -1,3 +1,8 @@
+/**
+ * Wrapper around the Open-Meteo API.
+ * Handles request construction and response normalization.
+ */
+
 import type { ForecastResponse, OriginsResponse } from "../types/api";
 import type { Origin } from "../types/weather";
 import { http } from "./http";

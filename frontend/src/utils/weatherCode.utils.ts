@@ -1,6 +1,13 @@
 
 import type { WeatherVisual } from "../types/weather";
 
+/**
+ * Maps Open-Meteo weather codes into semantic UI visuals.
+ * Groups multiple numeric codes into a smaller set of states used by the UI.
+ *
+ * Reference: https://open-meteo.com/en/docs (weathercode)
+ */
+
 export function mapWeatherCode(code: number | null): WeatherVisual {
   if (code === 0)
     return { label: "Clear Sky", icon: "☀️", tone: "clear" };
@@ -47,6 +54,10 @@ export function mapWeatherCode(code: number | null): WeatherVisual {
   return { label: "Unknown Weather", icon: "❔", tone: "unknown" };
 }
 
+/**
+ * Safe wrapper around `mapWeatherCode`.
+ * Ensures stable fallback values even when `code` is null/undefined.
+ */
 
 export function getWeatherVisual(code: number | null | undefined) {
   const mapped = mapWeatherCode(code ?? null);

@@ -1,3 +1,8 @@
+/**
+ * Global error boundary to prevent full UI crashes
+ * and provide a safe fallback screen.
+ */
+
 import React from "react";
 import styles from "./ErrorBoundary.module.css";
 import LogoImage from "../../assets/digital-earth.png";

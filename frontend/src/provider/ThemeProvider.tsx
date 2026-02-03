@@ -1,4 +1,3 @@
-// ThemeProvider.tsx
 import React, { createContext, useContext } from "react";
 import { useTheme } from "../hooks/useTheme";
 

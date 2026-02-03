@@ -1,3 +1,10 @@
+/**
+ * Central Express error handler.
+ *
+ * - Logs the original error (useful for debugging)
+ * - Returns a normalized JSON error shape: { error: { code, message } }
+ * - Hides internal details for 500 errors (security + UX)
+ */
 function errorHandler(err, req, res, next) {
   console.error(err);
 

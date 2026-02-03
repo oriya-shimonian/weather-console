@@ -1,80 +1,17 @@
-// import { useEffect, useMemo, useState } from "react";
-// import { weatherApi } from "../api/weatherApi";
-// import type { ForecastResponse } from "../types/api";
-// import type { LocationsForNavbar, Origin } from "../types/weather";
-// import { getOriginFromUrl, setOriginInUrl } from "../utils/weatherLocation.utils";
+/**
+ * Central hook responsible for fetching and exposing weather data to the UI.
+ *
+ * Flow:
+ * 1) Fetch origins (locations)
+ * 2) Resolve initial selection (URL param if valid, otherwise first location)
+ * 3) Fetch forecast for the selected origin
+ *
+ * Exposes:
+ * - `loading` and granular loading flags
+ * - `error` as a user-facing message
+ * - `refetch` to retry the latest request
+ */
 
-// export function useWeatherData() {
-//   const [origins, setOrigins] = useState<Origin[]>([]);
-//   const [selectedId, setSelectedId] = useState<number>(1);
-//   const [weather, setWeather] = useState<ForecastResponse | null>(null);
-
-//   const [loadingOrigins, setLoadingOrigins] = useState(false);
-//   const [loadingWeather, setLoadingWeather] = useState(false);
-//   const [error, setError] = useState<string | null>(null);
-  
-//   useEffect(() => {
-//     (async () => {
-//       try {
-//         setLoadingOrigins(true);
-//         const data = await weatherApi.getOrigins();
-//         setOrigins(data);
-//         // setSelectedId(+data[0]?.id);
-
-//         const fromUrl = getOriginFromUrl();
-
-//         const initial =
-//           fromUrl && data.some((o) => o.id === fromUrl)
-//             ? fromUrl
-//             : data[0]?.id;
-
-//         setSelectedId(+initial);
-//       } catch (e) {
-//         setError(e instanceof Error ? e.message : "Failed to load origins");
-//       } finally {
-//         setLoadingOrigins(false);
-//       }
-//     })();
-//   }, []);
-
-//   useEffect(() => {
-//     if (!selectedId) return;
-//     (async () => {
-//       try {
-//         setLoadingWeather(true);
-//         setError(null);
-//         const data = await weatherApi.getWeather(selectedId);
-//         setWeather(data);
-//       } catch (e) {
-//         setError(e instanceof Error ? e.message : "Failed to load weather");
-//       } finally {
-//         setLoadingWeather(false);
-//       }
-//     })();
-//   }, [selectedId]);
-
-//   const locationsForNavbar: LocationsForNavbar[] = useMemo(
-//     () => origins.map((o) => ({ id: o.id, city: o.city, country: o.country })),
-//     [origins]
-//   );
-
-//   const setSelectedOrigin = (id: string) => {
-//     setSelectedId(+id);
-//     setOriginInUrl(+id);
-//   };
-
-//   return {
-//     origins,
-//     locationsForNavbar,
-//     selectedId,
-//     setSelectedId: setSelectedOrigin,
-//     weather,
-//     loading: loadingOrigins || loadingWeather,
-//     loadingOrigins,
-//     loadingWeather,
-//     error,
-//   };
-// }
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { weatherApi } from "../api/weatherApi";
 import type { ForecastResponse } from "../types/api";
@@ -146,9 +83,7 @@ export function useWeatherData() {
   };
 
   const refetch = useCallback(() => {
-    // אם אין selectedId עדיין => ננסה להביא locations מחדש
     if (selectedId == null) return fetchOrigins();
-    // אחרת => ננסה להביא forecast מחדש
     return fetchWeather(selectedId);
   }, [selectedId, fetchOrigins, fetchWeather]);
 
@@ -162,6 +97,6 @@ export function useWeatherData() {
     loadingOrigins,
     loadingWeather,
     error,
-    refetch, // ✅
+    refetch
   };
 }

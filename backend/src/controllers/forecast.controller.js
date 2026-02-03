@@ -1,6 +1,15 @@
 const { getForecastDays } = require("../db/queries");
 const { parsePositiveInt } = require("../utils/number")
 
+/**
+ * GET /api/forecast?originId=1
+ *
+ * Validates originId, then returns stored 7-day forecast data from the DB.
+ * Errors:
+ *  - 400 BAD_REQUEST: originId missing/invalid
+ *  - 500 INTERNAL_ERROR: unexpected errors are handled by the global errorHandler middleware
+ */
+
 async function getForecast(req, res, next) {
   try {
     const originId = parsePositiveInt(req.query.originId);

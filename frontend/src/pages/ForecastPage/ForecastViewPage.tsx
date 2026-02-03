@@ -1,3 +1,8 @@
+/**
+ * Main forecast screen.
+ * Combines TodayCard and daily WeatherCards with loading and error states.
+ */
+
 import styles from "./ForecastViewPage.module.css";
 import type { ForecastDay, TempUnit } from "../../types/weather";
 import { WeatherCard } from "../../components/weatherCard/WeatherCard";

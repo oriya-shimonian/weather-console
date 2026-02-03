@@ -25,6 +25,19 @@ type BuildOptions = {
   unit: TempUnit;
 };
 
+/**
+ * Builds a UI-friendly view-model for weather cards ("today" / "day").
+ *
+ * Responsibilities:
+ * - Validates and normalizes date fields
+ * - Formats date/temps according to `locale` and temperature `unit`
+ * - Maps weather codes into `{ icon, label, tone }` via `getWeatherVisual`
+ *
+ * Notes:
+ * - `isValid` currently reflects date validity (not temperature availability)
+ * - Returns safe fallbacks ("—") when data is missing/invalid
+ */
+
 export function buildCardModel(
   day: ForecastDay,
   kind: CardKind,
